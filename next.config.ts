@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
       const existing = Array.isArray(config.externals) ? config.externals : [];
       config.externals = [...existing, "fluent-ffmpeg", "ffmpeg-static"];
     }
+
     return config;
   },
 };
