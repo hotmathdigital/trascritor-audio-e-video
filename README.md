@@ -46,25 +46,32 @@ npm install
 
 Pressione **Enter** e aguarde terminar (pode levar 2-5 minutos na primeira vez). Você verá várias linhas aparecendo — isso é normal.
 
-### Passo 5 — Criar o arquivo de configuração
+### Passo 5 — Criar sua chave de API na OpenAI
+
+1. Acesse [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+2. Clique em **`+ Create new secret key`**
+3. Dê um nome (ex: "TranscritorLocal") e clique em **`Create secret key`**
+4. **Copie a chave que aparecer** (ela começa com `sk-proj-...`)
+5. Guarde essa chave em algum lugar seguro (você precisará dela agora)
+
+> **Aviso:** nunca compartilhe essa chave com ninguém! Ela permite que qualquer um use (e gaste) o seu crédito OpenAI.
+
+### Passo 6 — Criar o arquivo de configuração
 
 1. No VS Code, à esquerda veja a lista de arquivos e pastas
-2. Clique com botão direito no arquivo `.env.local.example`
-3. Selecione **`Copy`**
-4. Clique com botão direito na pasta vazia (raiz) → **`Paste`**
-5. O arquivo copiado aparecerá como `env.local.example copy`
-6. Clique com botão direito nele → **`Rename`** → mude o nome para `.env.local` (sem o "copy")
-7. Abra esse arquivo `.env.local` (clique nele)
-8. Substitua `sk-sua-chave-aqui` pela sua chave real da OpenAI
+2. Clique com botão direito no arquivo `.env.local.example` → **`Rename`**
+3. Mude o nome para `.env.local` e pressione **Enter**
+4. Clique nesse arquivo para abrir
+5. Substitua `sk-sua-chave-aqui` pela sua chave real (aquela que você copiou no Passo 5)
 
 Exemplo:
 ```
-OPENAI_API_KEY=sk-proj-abcd1234...seu-token-real-aqui...
+OPENAI_API_KEY=sk-proj-abcd1234...sua-chave-real-aqui...
 ```
 
 **Salve** o arquivo (Ctrl+S).
 
-### Passo 6 — Rodar a aplicação
+### Passo 7 — Rodar a aplicação
 
 No terminal do VS Code, digite:
 
