@@ -15,26 +15,30 @@ Antes de começar, instale esses programas na sua máquina:
 
 ---
 
-### Passo 1 — Abrir o VS Code
+### Passo 1 — Criar uma pasta para o projeto
 
-Abra o VS Code que você instalou.
+1. No seu PC, crie uma pasta em um lugar fácil de achar (ex: Desktop ou Documentos)
+2. Nomeie como **`Transcritor`** (ou qualquer nome que quiser)
 
-### Passo 2 — Clonar o repositório
+### Passo 2 — Abrir a pasta no VS Code
 
-1. Clique em **`File`** → **`Clone Repository`** (ou use `Ctrl+Shift+P` e digite "clone")
-2. Cole essa URL na caixa:
-   ```
-   https://github.com/hotmathdigital/trascritor-audio-e-video.git
-   ```
-3. Escolha uma pasta no seu PC para salvar o projeto (ex: Desktop, Documentos, etc.)
-4. Clique em **`Select as Repository Destination`** e aguarde (pode levar alguns segundos)
-5. Quando terminar, clique em **`Open`** para abrir a pasta no VS Code
+1. Abra o VS Code
+2. Clique em **`File`** → **`Open Folder...`**
+3. Procure a pasta **`Transcritor`** que você criou e clique em **`Select Folder`**
 
-### Passo 3 — Abrir o Terminal
+Agora você verá a pasta vazia aberta no VS Code.
 
-Dentro do VS Code, clique em **`Terminal`** → **`New Terminal`** (ou use ``Ctrl+` ``)
+### Passo 3 — Clonar o repositório pelo Terminal
 
-Você verá um terminal preto abrir na parte de baixo da tela.
+1. Clique em **`Terminal`** → **`New Terminal`** (ou use ``Ctrl+` ``)
+2. Você verá um terminal preto aparecer na parte de baixo
+3. Cole esse comando:
+
+```bash
+git clone https://github.com/hotmathdigital/trascritor-audio-e-video.git .
+```
+
+Pressione **Enter** e aguarde terminar (pode levar alguns segundos). Os arquivos do projeto aparecerão na sua pasta.
 
 ### Passo 4 — Instalar as dependências
 
