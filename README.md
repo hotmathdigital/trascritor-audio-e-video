@@ -5,45 +5,82 @@ Aplicativo web de transcrição de áudio e vídeo usando a API Whisper da OpenA
 ## Como rodar localmente
 
 ### Pré-requisitos
-- **Node.js 20+** instalado ([baixar aqui](https://nodejs.org/))
-- **Git** instalado ([baixar aqui](https://git-scm.com/))
-- **VS Code** instalado ([baixar aqui](https://code.visualstudio.com/)) — recomendado, facilita muito por ter terminal integrado e visualização do projeto
-- Uma **chave de API da OpenAI** ([criar aqui](https://platform.openai.com/api-keys))
 
-### Passo 1 — Clonar o repositório
+Antes de começar, instale esses programas na sua máquina:
 
-Abra o terminal (Prompt de Comando, PowerShell ou Terminal) e rode:
+1. **Node.js 20+** ([baixar aqui](https://nodejs.org/)) — clique no botão grande verde "Download", execute o instalador e clique "Next" até o final
+2. **Git** ([baixar aqui](https://git-scm.com/)) — idem, instale normalmente
+3. **VS Code** ([baixar aqui](https://code.visualstudio.com/)) — recomendado, facilita muito
+4. Uma **chave de API da OpenAI** ([criar aqui](https://platform.openai.com/api-keys)) — será usada depois
 
-```bash
-git clone https://github.com/hotmathdigital/trascritor-audio-e-video.git
-cd trascritor-audio-e-video
-```
+---
 
-### Passo 2 — Instalar as dependências
+### Passo 1 — Abrir o VS Code
+
+Abra o VS Code que você instalou.
+
+### Passo 2 — Clonar o repositório
+
+1. Clique em **`File`** → **`Clone Repository`** (ou use `Ctrl+Shift+P` e digite "clone")
+2. Cole essa URL na caixa:
+   ```
+   https://github.com/hotmathdigital/trascritor-audio-e-video.git
+   ```
+3. Escolha uma pasta no seu PC para salvar o projeto (ex: Desktop, Documentos, etc.)
+4. Clique em **`Select as Repository Destination`** e aguarde (pode levar alguns segundos)
+5. Quando terminar, clique em **`Open`** para abrir a pasta no VS Code
+
+### Passo 3 — Abrir o Terminal
+
+Dentro do VS Code, clique em **`Terminal`** → **`New Terminal`** (ou use ``Ctrl+` ``)
+
+Você verá um terminal preto abrir na parte de baixo da tela.
+
+### Passo 4 — Instalar as dependências
+
+No terminal, copie e cole esse comando:
 
 ```bash
 npm install
 ```
 
-Aguarde terminar (pode levar alguns minutos na primeira vez).
+Pressione **Enter** e aguarde terminar (pode levar 2-5 minutos na primeira vez). Você verá várias linhas aparecendo — isso é normal.
 
-### Passo 3 — Configurar sua chave da OpenAI
+### Passo 5 — Criar o arquivo de configuração
 
-Crie um arquivo chamado `.env.local` na raiz do projeto com o seguinte conteúdo:
+1. No VS Code, à esquerda veja a lista de arquivos e pastas
+2. Clique com botão direito no arquivo `.env.local.example`
+3. Selecione **`Copy`**
+4. Clique com botão direito na pasta vazia (raiz) → **`Paste`**
+5. O arquivo copiado aparecerá como `env.local.example copy`
+6. Clique com botão direito nele → **`Rename`** → mude o nome para `.env.local` (sem o "copy")
+7. Abra esse arquivo `.env.local` (clique nele)
+8. Substitua `sk-sua-chave-aqui` pela sua chave real da OpenAI
 
+Exemplo:
 ```
-OPENAI_API_KEY=sk-sua-chave-aqui
+OPENAI_API_KEY=sk-proj-abcd1234...seu-token-real-aqui...
 ```
 
-> **Importante:** substitua `sk-sua-chave-aqui` pela sua chave real da OpenAI. Você pode usar o arquivo `.env.local.example` como referência.
+**Salve** o arquivo (Ctrl+S).
 
-### Passo 4 — Rodar o app
+### Passo 6 — Rodar a aplicação
+
+No terminal do VS Code, digite:
 
 ```bash
 npm run dev
 ```
 
-Pronto! Acesse [http://localhost:3000](http://localhost:3000) no navegador.
+Pressione **Enter**. Quando aparecer a mensagem com o link, abra seu navegador e acesse:
+
+```
+http://localhost:3000
+```
+
+**Pronto! O app está rodando!** 🎉
+
+Para parar a aplicação depois, clique no terminal e pressione **Ctrl+C**.
 
 ## Custos
 
