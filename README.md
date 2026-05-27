@@ -15,8 +15,8 @@ Aplicativo web de transcrição de áudio e vídeo usando a API Whisper da OpenA
 Abra o terminal (Prompt de Comando, PowerShell ou Terminal) e rode:
 
 ```bash
-git clone https://github.com/hotmathdigital/adtranscribe.git
-cd adtranscribe
+git clone https://github.com/hotmathdigital/trascritor-audio-e-video.git
+cd trascritor-audio-e-video
 ```
 
 ### Passo 2 — Instalar as dependências
