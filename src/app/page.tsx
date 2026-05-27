@@ -35,7 +35,9 @@ const LANGUAGES = [
 const MAX_SIZE_BYTES = 500 * 1024 * 1024;
 const MAX_FILES = 3;
 
-type FileStatus = "pending" | "uploading" | "transcribing" | "done" | "error";
+type FileStatus = "pending" | "uploading" | "processing" | "transcribing" | "done" | "error";
+
+const LARGE_FILE_THRESHOLD = 30 * 1024 * 1024; // 30 MB
 
 interface FileEntry {
   file: File;
@@ -106,19 +108,32 @@ export default function Home() {
       if (files[i].status === "done") continue;
 
       setCurrentIndex(i);
+      const isLarge = files[i].file.size > LARGE_FILE_THRESHOLD;
       setFiles((prev) => prev.map((f, idx) => idx === i ? { ...f, status: "uploading", error: "" } : f));
+
+      // Para arquivos grandes: simulamos a transição entre estágios via timer
+      // (não temos como saber server-side quando ffmpeg termina)
+      const stageTimer1 = isLarge ? setTimeout(() => {
+        setFiles((prev) => prev.map((f, idx) => idx === i && f.status === "uploading" ? { ...f, status: "processing" } : f));
+      }, 3000) : null;
+      const stageTimer2 = isLarge ? setTimeout(() => {
+        setFiles((prev) => prev.map((f, idx) => idx === i && (f.status === "uploading" || f.status === "processing") ? { ...f, status: "transcribing" } : f));
+      }, 15000) : setTimeout(() => {
+        setFiles((prev) => prev.map((f, idx) => idx === i && f.status === "uploading" ? { ...f, status: "transcribing" } : f));
+      }, 2000);
 
       try {
         const formData = new FormData();
         formData.append("file", files[i].file);
         formData.append("language", language);
 
-        setFiles((prev) => prev.map((f, idx) => idx === i ? { ...f, status: "transcribing" } : f));
-
         const res = await fetch("/api/transcribe", {
           method: "POST",
           body: formData,
         });
+
+        if (stageTimer1) clearTimeout(stageTimer1);
+        clearTimeout(stageTimer2);
 
         if (!res.ok) {
           const body = await res.json().catch(() => ({ error: "Erro desconhecido." }));
@@ -128,6 +143,8 @@ export default function Home() {
         const data = await res.json();
         setFiles((prev) => prev.map((f, idx) => idx === i ? { ...f, status: "done", transcript: data.text } : f));
       } catch (err) {
+        if (stageTimer1) clearTimeout(stageTimer1);
+        clearTimeout(stageTimer2);
         const msg = err instanceof Error ? err.message : "Falha ao transcrever.";
         setFiles((prev) => prev.map((f, idx) => idx === i ? { ...f, status: "error", error: msg } : f));
       }
@@ -303,7 +320,12 @@ export default function Home() {
                 <FileIcon className="w-5 h-5 text-indigo-400 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-white truncate">{entry.file.name}</p>
-                  <p className="text-xs text-gray-500">{formatBytes(entry.file.size)}</p>
+                  <p className="text-xs text-gray-500">
+                    {formatBytes(entry.file.size)}
+                    {entry.file.size > LARGE_FILE_THRESHOLD && (
+                      <span className="ml-2 text-amber-400/80">• arquivo grande, pode levar alguns minutos</span>
+                    )}
+                  </p>
                 </div>
                 <div className="flex-shrink-0">
                   {entry.status === "pending" && !isProcessing && (
@@ -316,9 +338,14 @@ export default function Home() {
                       <SpinnerIcon className="w-3.5 h-3.5 animate-spin" /> Enviando…
                     </span>
                   )}
+                  {entry.status === "processing" && (
+                    <span className="flex items-center gap-1 text-xs text-indigo-400">
+                      <SpinnerIcon className="w-3.5 h-3.5 animate-spin" /> Processando áudio…
+                    </span>
+                  )}
                   {entry.status === "transcribing" && (
                     <span className="flex items-center gap-1 text-xs text-indigo-400">
-                      <SpinnerIcon className="w-3.5 h-3.5 animate-spin" /> Transcrevendo…
+                      <SpinnerIcon className="w-3.5 h-3.5 animate-spin" /> Transcrevendo com IA…
                     </span>
                   )}
                   {entry.status === "done" && (
@@ -340,7 +367,7 @@ export default function Home() {
         {isProcessing && (
           <div className="space-y-1">
             <p className="text-xs text-gray-400 text-center">
-              Transcrevendo arquivo {currentIndex + 1} de {files.length}…
+              Processando arquivo {currentIndex + 1} de {files.length}…
             </p>
             <div className="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden">
               <div
@@ -348,6 +375,9 @@ export default function Home() {
                 style={{ width: `${((currentIndex + 1) / files.length) * 100}%` }}
               />
             </div>
+            <p className="text-[11px] text-gray-500 text-center pt-1">
+              Não feche essa aba. Arquivos grandes podem levar alguns minutos.
+            </p>
           </div>
         )}
 
