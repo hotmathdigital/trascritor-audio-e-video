@@ -7,6 +7,7 @@ Aplicativo web de transcrição de áudio e vídeo usando a API Whisper da OpenA
 ### Pré-requisitos
 - **Node.js 20+** instalado ([baixar aqui](https://nodejs.org/))
 - **Git** instalado ([baixar aqui](https://git-scm.com/))
+- **VS Code** instalado ([baixar aqui](https://code.visualstudio.com/)) — recomendado, facilita muito por ter terminal integrado e visualização do projeto
 - Uma **chave de API da OpenAI** ([criar aqui](https://platform.openai.com/api-keys))
 
 ### Passo 1 — Clonar o repositório
